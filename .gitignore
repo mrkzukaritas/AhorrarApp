@@ -1,0 +1,12 @@
+# Android Studio
+local.properties
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+build/
+
+# Otros archivos locales
+*.keystore
+*.jks
