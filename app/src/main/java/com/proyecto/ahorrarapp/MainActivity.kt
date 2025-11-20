@@ -86,12 +86,12 @@ fun AhorrarApp() {
                     .fillMaxSize()
                     .padding(innerPadding),
                 profileData = profileData.value,
-                transactions = transactions.value, // ✅ NUEVO PARÁMETRO
+                transactions = transactions.value,
                 onProfileUpdated = { newData ->
                     profileData.value = newData
                 },
                 onClearAllData = {
-                    // ✅ NUEVA FUNCIÓN: Limpiar todos los datos
+                    // Limpiar todos los datos
                     profileData.value = mapOf(
                         "nombre" to "",
                         "email" to "",

@@ -1,10 +1,8 @@
-package com.proyecto.ahorrarapp.components
+ package com.proyecto.ahorrarapp.components
 
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import com.proyecto.ahorrarapp.R
@@ -32,7 +30,13 @@ fun BottomNavigationBar(
                 },
                 label = { Text(title) },
                 selected = selectedItem == index,
-                onClick = { onItemSelected(index) }
+                onClick = { onItemSelected(index) },
+
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = Color.Black,
+                    selectedTextColor = Color.Black,
+                    indicatorColor = Color(0xA4BEDFD6)   // Verde
+                )
             )
         }
     }

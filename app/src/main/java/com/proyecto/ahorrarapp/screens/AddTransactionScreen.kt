@@ -1,5 +1,6 @@
 package com.proyecto.ahorrarapp.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
@@ -11,9 +12,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.proyecto.ahorrarapp.R
 import com.proyecto.ahorrarapp.models.Categories
 import com.proyecto.ahorrarapp.models.Transaction
 import com.proyecto.ahorrarapp.models.TransactionType
@@ -39,13 +42,15 @@ fun AddTransactionScreen(
 
     Column(modifier = modifier) {
         // Header
-        CenterAlignedTopAppBar(
-            title = {
-                Text(
-                    text = "AhorrarApp",
-                    fontWeight = FontWeight.Bold
-                )
-            }
+        Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = "Logo",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+                .align(Alignment.CenterHorizontally)
+                .size(80.dp)
+
         )
 
         Column(

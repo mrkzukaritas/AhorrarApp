@@ -1,6 +1,7 @@
 package com.proyecto.ahorrarapp.screens
 
-import androidx.compose.foundation.clickable // ✅ ESTA IMPORTACIÓN
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -11,9 +12,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.proyecto.ahorrarapp.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,27 +36,16 @@ fun ProfileScreen(
     val scrollState = rememberScrollState()
 
     Column(modifier = modifier) {
-        CenterAlignedTopAppBar(
-            title = {
-                Text(
-                    text = "AhorrarApp",
-                    fontWeight = FontWeight.Bold
-                )
-            },
-            //QUITAR ESTO
-            actions = {
-                if (!isEditing) {
-                    IconButton(onClick = {
-                        isEditing = true
-                        currentEditingField = "nombre"
-                        tempValue = tempProfileData["nombre"] ?: ""
-                    }) {
-                        Icon(Icons.Default.Edit, contentDescription = "Editar perfil")
-                    }
-                }
-            }
-        )
+        Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = "Logo",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+                .align(Alignment.CenterHorizontally)
+                .size(80.dp)
 
+        )
         Column(
             modifier = Modifier
                 .padding(16.dp)

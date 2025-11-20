@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.proyecto.ahorrarapp"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.proyecto.ahorrarapp"
@@ -70,6 +70,7 @@ dependencies {
 
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.7.6")
+    implementation("androidx.compose.ui:ui:1.9.5")
 
     // Testing
     testImplementation("junit:junit:4.13.2")
