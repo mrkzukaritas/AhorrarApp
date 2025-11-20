@@ -61,14 +61,18 @@ fun SummaryScreen(
             // Estadísticas
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.Center,
+
             ) {
                 Card(
                     modifier = Modifier.weight(1f),
+
                     colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F5E8))
+
                 ) {
                     Column(
                         modifier = Modifier.padding(16.dp),
+
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
@@ -89,7 +93,7 @@ fun SummaryScreen(
 
                 Card(
                     modifier = Modifier.weight(1f),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFE3F2FD))
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFE3F2FD)),
                 ) {
                     Column(
                         modifier = Modifier.padding(16.dp),
@@ -120,15 +124,15 @@ fun SummaryScreen(
             )
 
             TipCard(
-                title = "📚 Libros usados",
+                title = "Libros usados",
                 description = "Compra libros de segunda mano o úsalos digitalmente"
             )
             TipCard(
-                title = "☕ Café casero",
+                title = "Café casero",
                 description = "Prepara tu café en casa en lugar de comprarlo"
             )
             TipCard(
-                title = "🎯 Apps de descuentos",
+                title = "Apps de descuentos",
                 description = "Usa apps para encontrar ofertas estudiantiles"
             )
         }
@@ -161,8 +165,9 @@ fun TipCard(title: String, description: String) {
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            //imagen de los tipos
             Text(
-                text = "💡",
+                text = "",
                 modifier = Modifier.padding(end = 12.dp)
             )
             Column {

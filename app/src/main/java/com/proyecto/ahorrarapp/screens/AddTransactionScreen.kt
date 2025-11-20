@@ -17,6 +17,10 @@ import androidx.compose.ui.unit.sp
 import com.proyecto.ahorrarapp.models.Categories
 import com.proyecto.ahorrarapp.models.Transaction
 import com.proyecto.ahorrarapp.models.TransactionType
+import com.proyecto.ahorrarapp.ui.theme.IncomeGreen // ✅ IMPORTAR COLORES
+import com.proyecto.ahorrarapp.ui.theme.ExpenseRed   // ✅ IMPORTAR COLORES
+import com.proyecto.ahorrarapp.ui.theme.PrimaryGreen // ✅ IMPORTAR COLORES
+import com.proyecto.ahorrarapp.ui.theme.CardGreenLight // ✅ IMPORTAR COLORES
 import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,7 +45,7 @@ fun AddTransactionScreen(
                     text = "AhorrarApp",
                     fontWeight = FontWeight.Bold
                 )
-            },
+            }
         )
 
         Column(
@@ -138,7 +142,6 @@ fun AddTransactionScreen(
         }
     }
 }
-
 @Composable
 fun TransactionTypeChip(
     type: TransactionType,
@@ -146,17 +149,25 @@ fun TransactionTypeChip(
     onClick: () -> Unit
 ) {
     val (text, color) = when (type) {
-        TransactionType.INCOME -> "+ Ingreso" to Color(0xFF2E7D32)
-        TransactionType.EXPENSE -> "- Gasto" to Color(0xFFC62828)
+        TransactionType.INCOME -> "+ Ingreso" to IncomeGreen
+        TransactionType.EXPENSE -> "- Gasto" to ExpenseRed
     }
 
+    // Versión simplificada sin border personalizado
     FilterChip(
         selected = isSelected,
         onClick = onClick,
-        label = { Text(text) },
+        label = {
+            Text(
+                text = text,
+                color = if (isSelected) Color.White else color
+            )
+        },
         colors = FilterChipDefaults.filterChipColors(
             selectedLabelColor = Color.White,
-            selectedContainerColor = color
+            selectedContainerColor = color,
+            labelColor = color,
+            containerColor = Color.Transparent
         )
     )
 }
@@ -169,11 +180,18 @@ fun CategoryChip(
 ) {
     val emoji = Categories.getEmoji(category)
 
+    // Versión simplificada sin border personalizado
     FilterChip(
         selected = isSelected,
         onClick = onClick,
         label = {
             Text("$emoji $category")
-        }
+        },
+        colors = FilterChipDefaults.filterChipColors(
+            selectedContainerColor = PrimaryGreen,
+            selectedLabelColor = Color.White,
+            containerColor = CardGreenLight,
+            labelColor = Color.Black
+        )
     )
 }

@@ -17,18 +17,18 @@ enum class TransactionType {
 
 object Categories {
     val categories = mapOf(
-        "Comida" to "🍕",
-        "Transporte" to "🚗",
-        "Entretenimiento" to "🎮",
-        "Materiales" to "📚",
-        "Trabajo" to "💼",
-        "Café" to "☕",
-        "Libros" to "📖",
-        "Universidad" to "🎓",
-        "Otros" to "📦"
+        "Comida" to "",
+        "Transporte" to "",
+        "Entretenimiento" to "",
+        "Materiales" to "",
+        "Trabajo" to "",
+        "Café" to "",
+        "Libros" to "",
+        "Universidad" to "",
+        "Otros" to ""
     )
 
     fun getEmoji(category: String): String {
-        return categories[category] ?: "📦"
+        return categories[category] ?: ""
     }
 }
