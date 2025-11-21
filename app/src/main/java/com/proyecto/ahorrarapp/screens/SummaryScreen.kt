@@ -23,7 +23,7 @@ fun SummaryScreen(
     transactions: List<Transaction>,
     onAddTransaction: () -> Unit
 ) {
-    val totalAhorrado = transactions
+    val totalIngresos = transactions
         .filter { it.type == TransactionType.INCOME }
         .sumOf { it.amount }
 
@@ -31,7 +31,7 @@ fun SummaryScreen(
         .filter { it.type == TransactionType.EXPENSE }
         .sumOf { it.amount }
 
-    val ingresosMes = totalAhorrado - totalGastos
+    val totalAhorrado = totalIngresos - totalGastos
 
     LazyColumn(
         modifier = modifier.padding(16.dp),
@@ -70,13 +70,13 @@ fun SummaryScreen(
             ) {
                 Card(
                     modifier = Modifier.weight(1f),
-
                     colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F5E8))
 
                 ) {
                     Column(
-                        modifier = Modifier.padding(16.dp),
-
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
@@ -96,15 +96,18 @@ fun SummaryScreen(
                 Spacer(modifier = Modifier.width(16.dp))
 
                 Card(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFFE3F2FD)),
                 ) {
                     Column(
-                        modifier = Modifier.padding(16.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = "$${"%.0f".format(ingresosMes)}",
+                            text = "$${"%.0f".format(totalAhorrado)}",
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFF1565C0)
