@@ -107,7 +107,7 @@ fun SummaryScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = "$${"%.0f".format(totalAhorrado)}",
+                            text = "$${"%.0f".format(totalIngresos)}",
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFF1565C0)
@@ -141,6 +141,46 @@ fun SummaryScreen(
             TipCard(
                 title = "Apps de descuentos",
                 description = "Usa apps para encontrar ofertas estudiantiles"
+            )
+            TipCard(
+                title = "Transporte compartido",
+                description = "Comparte viajes con amigos o usa bicicleta para ahorrar"
+            )
+            TipCard(
+                title = "Planifica tus comidas",
+                description = "Haz un menú semanal para evitar compras impulsivas"
+            )
+            TipCard(
+                title = "Evita antojos diarios",
+                description = "Reduce gastos pequeños como snacks o bebidas"
+            )
+            TipCard(
+                title = "Usa biblioteca",
+                description = "Aprovecha recursos gratuitos en tu institución"
+            )
+            TipCard(
+                title = "Controla tus suscripciones",
+                description = "Cancela servicios que no uses regularmente"
+            )
+            TipCard(
+                title = "Compra al por mayor",
+                description = "Ahorra comprando productos básicos en volumen"
+            )
+            TipCard(
+                title = "Busca becas",
+                description = "Revisa convocatorias de becas o apoyos estudiantiles"
+            )
+            TipCard(
+                title = "Estudia en casa",
+                description = "Ahorra evitando cafés o lugares costosos para estudiar"
+            )
+            TipCard(
+                title = "Evita deudas",
+                description = "Paga a tiempo y evita intereses innecesarios"
+            )
+            TipCard(
+                title = "Lleva agua",
+                description = "Carga tu propia botella para no comprar bebidas"
             )
         }
 

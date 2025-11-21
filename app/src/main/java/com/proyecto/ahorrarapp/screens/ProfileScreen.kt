@@ -36,6 +36,7 @@ fun ProfileScreen(
     val scrollState = rememberScrollState()
 
     Column(modifier = modifier) {
+
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "Logo",
