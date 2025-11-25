@@ -22,6 +22,3 @@ class ExampleInstrumentedTest {
         assertEquals("com.proyecto.ahorrarapp", appContext.packageName)
     }
 }
-class NoExample {
-    iudghjsadfkgjhsdfjghsdf
-}
