@@ -33,17 +33,7 @@ fun AhorrarApp() {
     val selectedScreen = remember { mutableStateOf(0) }
     val transactions = remember { mutableStateOf(emptyList<Transaction>()) }
 
-    // Datos de perfil
-    val profileData = remember {
-        mutableStateOf(
-            mapOf(
-                "nombre" to "",
-                "email" to "",
-                "universidad" to "",
-                "estatus" to ""
-            )
-        )
-    }
+
 
     Scaffold(
         bottomBar = {
@@ -82,27 +72,13 @@ fun AhorrarApp() {
                 transactions = transactions.value
             )
             3 -> ProfileScreen(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-                profileData = profileData.value,
-                transactions = transactions.value,
-                onProfileUpdated = { newData ->
-                    profileData.value = newData
-                },
-                onClearAllData = {
-                    // Limpiar todos los datos
-                    profileData.value = mapOf(
-                        "nombre" to "",
-                        "email" to "",
-                        "universidad" to "",
-                        "estatus" to ""
-                    )
-                    transactions.value = emptyList()
-
-                    // Opcional: Navegar al resumen después de limpiar
-                    selectedScreen.value = 0
-                }
+                profileData = mapOf(
+                    "nombre" to "Maria Bermudez",
+                    "email" to "maria@gmail.com",
+                    "universidad" to "Universidad de Ibague",
+                    "estatus" to "Estudiante"
+                ),
+                transactions =transactions.value// o tu lista real de transacciones
             )
         }
     }

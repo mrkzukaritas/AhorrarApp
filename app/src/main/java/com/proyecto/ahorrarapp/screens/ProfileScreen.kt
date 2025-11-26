@@ -1,12 +1,9 @@
 package com.proyecto.ahorrarapp.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,25 +15,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.proyecto.ahorrarapp.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
     profileData: Map<String, String>,
-    transactions: List<com.proyecto.ahorrarapp.models.Transaction>,
-    onProfileUpdated: (Map<String, String>) -> Unit,
-    onClearAllData: () -> Unit
+    transactions: List<com.proyecto.ahorrarapp.models.Transaction>
 ) {
-    var isEditing by remember { mutableStateOf(false) }
-    var currentEditingField by remember { mutableStateOf<String?>(null) }
-    var tempProfileData by remember { mutableStateOf(profileData) }
-    var tempValue by remember { mutableStateOf("") }
-    var showLogoutDialog by remember { mutableStateOf(false) }
-
-    val scrollState = rememberScrollState()
-
     Column(modifier = modifier) {
-
+        // Logo - MISMAS PROPIEDADES QUE HistoryScreen
+        Spacer(modifier = Modifier.height(45.dp))
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "Logo",
@@ -45,12 +32,12 @@ fun ProfileScreen(
                 .padding(top = 16.dp)
                 .align(Alignment.CenterHorizontally)
                 .size(80.dp)
-
         )
+
         Column(
             modifier = Modifier
-                .padding(16.dp)
-                .verticalScroll(scrollState),
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             // Información del usuario
@@ -62,15 +49,15 @@ fun ProfileScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = tempProfileData["nombre"] ?: "Tu nombre",
+                        text = profileData["nombre"] ?: "Nombre no disponible",
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        color = if (tempProfileData["nombre"].isNullOrEmpty()) Color.Gray else Color.Black
+                        color = if (profileData["nombre"].isNullOrEmpty()) Color.Gray else Color.Black
                     )
                     Text(
-                        text = tempProfileData["email"] ?: "tu.email@ejemplo.com",
+                        text = profileData["email"] ?: "Email no disponible",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = if (tempProfileData["email"].isNullOrEmpty()) Color.Gray else Color.Gray
+                        color = if (profileData["email"].isNullOrEmpty()) Color.Gray else Color.Gray
                     )
 
                     // Mostrar estadísticas rápidas
@@ -84,267 +71,121 @@ fun ProfileScreen(
                 }
             }
 
-            // Campo de edición actual
-            if (isEditing && currentEditingField != null) {
-                EditingFieldCard(
-                    currentField = currentEditingField ?: "",
-                    tempValue = tempValue,
-                    onValueChange = { tempValue = it },
-                    onCancel = {
-                        isEditing = false
-                        currentEditingField = null
-                    },
-                    onSave = {
-                        val updatedData = tempProfileData + (currentEditingField!! to tempValue)
-                        tempProfileData = updatedData
-                        onProfileUpdated(updatedData)
-                        isEditing = false
-                        currentEditingField = null
-                    },
-                    isValueValid = tempValue.isNotEmpty()
-                )
-            }
-
-            // TODOS LOS CAMPOS EN UNA SOLA TARJETA
-            if (!isEditing) {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            // Información Personal (solo lectura)
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        // Título de la sección
-                        Text(
-                            text = "Información Personal",
-                            style = MaterialTheme.typography.headlineSmall,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
-                        )
+                    Text(
+                        text = "Información Personal",
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
 
-                        // Campo Nombre
-                        ProfileFieldRow(
-                            label = "Nombre completo",
-                            value = tempProfileData["nombre"],
-                            onClick = {
-                                currentEditingField = "nombre"
-                                tempValue = tempProfileData["nombre"] ?: ""
-                                isEditing = true
-                            }
-                        )
+                    // Campo Nombre
+                    ProfileFieldRow(
+                        label = "Nombre completo",
+                        value = profileData["nombre"]
+                    )
 
-                        Divider(color = Color.LightGray, thickness = 1.dp)
+                    Divider(color = Color.LightGray, thickness = 1.dp)
 
-                        // Campo Email
-                        ProfileFieldRow(
-                            label = "Email",
-                            value = tempProfileData["email"],
-                            onClick = {
-                                currentEditingField = "email"
-                                tempValue = tempProfileData["email"] ?: ""
-                                isEditing = true
-                            }
-                        )
+                    // Campo Email
+                    ProfileFieldRow(
+                        label = "Email",
+                        value = profileData["email"]
+                    )
 
-                        Divider(color = Color.LightGray, thickness = 1.dp)
+                    Divider(color = Color.LightGray, thickness = 1.dp)
 
-                        // Campo Contraseña
-                        ProfileFieldRow(
-                            label = "Contraseña",
-                            value = "••••••••••••••",
-                            isPassword = true,
-                            onClick = {
-                                // Lógica para cambiar contraseña
-                            }
-                        )
+                    // Campo Contraseña
+                    ProfileFieldRow(
+                        label = "Contraseña",
+                        value = "••••••••••••••",
+                        isPassword = true
+                    )
 
-                        Divider(color = Color.LightGray, thickness = 1.dp)
+                    Divider(color = Color.LightGray, thickness = 1.dp)
 
-                        // Campo Universidad
-                        ProfileFieldRow(
-                            label = "Universidad",
-                            value = tempProfileData["universidad"],
-                            onClick = {
-                                currentEditingField = "universidad"
-                                tempValue = tempProfileData["universidad"] ?: ""
-                                isEditing = true
-                            }
-                        )
+                    // Campo Universidad
+                    ProfileFieldRow(
+                        label = "Universidad",
+                        value = profileData["universidad"]
+                    )
 
-                        Divider(color = Color.LightGray, thickness = 1.dp)
+                    Divider(color = Color.LightGray, thickness = 1.dp)
 
-                        // Campo Estatus académico
-                        ProfileFieldRow(
-                            label = "Estatus académico",
-                            value = tempProfileData["estatus"],
-                            onClick = {
-                                currentEditingField = "estatus"
-                                tempValue = tempProfileData["estatus"] ?: ""
-                                isEditing = true
-                            }
-                        )
-                    }
+                    // Campo Estatus académico
+                    ProfileFieldRow(
+                        label = "Estatus académico",
+                        value = profileData["estatus"]
+                    )
                 }
             }
 
-            // Botón cerrar sesión
-            Button(
-                onClick = { showLogoutDialog = true },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFFFE0E0),
-                    contentColor = Color(0xFFD32F2F)
-                )
+            // Mensaje informativo
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFFE3F2FD))
             ) {
-                Text("Cerrar sesión", fontSize = 16.sp)
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Text(
+                        text = "Vista de solo lectura",
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF1976D2)
+                    )
+                    Text(
+                        text = "Esta pantalla es solo para pruebas de visualización",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Color.Gray
+                    )
+                }
             }
         }
     }
-
-    // Diálogo de confirmación para cerrar sesión
-    if (showLogoutDialog) {
-        AlertDialog(
-            onDismissRequest = { showLogoutDialog = false },
-            title = { Text("¿Cerrar sesión?") },
-            text = {
-                Text("Se borrarán todos tus datos:\n\n• Perfil\n• Transacciones\n• Historial\n\nEsta acción no se puede deshacer.")
-            },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        onClearAllData()
-                        showLogoutDialog = false
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFD32F2F)
-                    )
-                ) {
-                    Text("Sí, cerrar sesión")
-                }
-            },
-            dismissButton = {
-                Button(
-                    onClick = { showLogoutDialog = false },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.LightGray
-                    )
-                ) {
-                    Text("Cancelar")
-                }
-            }
-        )
-    }
 }
 
-// NUEVO COMPONENTE: Fila de campo de perfil (sin tarjeta individual)
+// Componente de campo de perfil en solo lectura - MEJORADO
 @Composable
 fun ProfileFieldRow(
     label: String,
     value: String?,
-    isPassword: Boolean = false,
-    onClick: () -> Unit
+    isPassword: Boolean = false
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() }, // ✅ ESTO NECESITA LA IMPORTACIÓN
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+    Column(
+        modifier = Modifier.fillMaxWidth()
     ) {
-        Column(
-            modifier = Modifier.weight(1f)
-        ) {
-            Text(
-                text = label,
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.Gray,
-                fontSize = 14.sp
-            )
-            Text(
-                text = if (isPassword) "••••••••••••••" else (value ?: "Toca para agregar"),
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(vertical = 4.dp),
-                color = if (value.isNullOrEmpty()) Color.Gray else Color.Black
-            )
-        }
-
-        // Icono de edición
         Text(
-            text = "✏️",
-            color = Color.Gray
+            text = label,
+            style = MaterialTheme.typography.bodyMedium,
+            color = Color.Gray,
+            fontSize = 14.sp
         )
-    }
-}
-
-@Composable
-fun EditingFieldCard(
-    currentField: String,
-    tempValue: String,
-    onValueChange: (String) -> Unit,
-    onCancel: () -> Unit,
-    onSave: () -> Unit,
-    isValueValid: Boolean
-) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F5E8))
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
+        Spacer(modifier = Modifier.height(4.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Editando: ${getFieldLabel(currentField)}",
+                text = if (isPassword) "••••••••••••••" else (value ?: "No especificado"),
                 style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF2E7D32)
+                color = if (value.isNullOrEmpty()) Color.Gray else Color.Black,
+                fontWeight = FontWeight.Medium
             )
-            Spacer(modifier = Modifier.height(16.dp))
-
-            OutlinedTextField(
-                value = tempValue,
-                onValueChange = onValueChange,
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text(getFieldLabel(currentField)) },
-                placeholder = { Text("Escribe tu ${getFieldLabel(currentField).lowercase()}...") },
-                singleLine = true
+            // Icono de solo lectura
+            Text(
+                text = "👁️",
+                color = Color.LightGray
             )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                Button(
-                    onClick = onCancel,
-                    modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.LightGray
-                    )
-                ) {
-                    Text("Cancelar")
-                }
-                Button(
-                    onClick = onSave,
-                    modifier = Modifier.weight(1f),
-                    enabled = isValueValid
-                ) {
-                    Text("Guardar")
-                }
-            }
         }
-    }
-}
-
-private fun getFieldLabel(field: String): String {
-    return when (field) {
-        "nombre" -> "Nombre completo"
-        "email" -> "Email"
-        "universidad" -> "Universidad"
-        "estatus" -> "Estatus académico"
-        else -> field
     }
 }
