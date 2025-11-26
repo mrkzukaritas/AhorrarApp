@@ -107,7 +107,7 @@ fun SummaryScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = "$${"%.0f".format(totalAhorrado)}",
+                            text = "$${"%.0f".format(totalIngresos)}",
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFF1565C0)
@@ -142,6 +142,30 @@ fun SummaryScreen(
                 title = "Apps de descuentos",
                 description = "Usa apps para encontrar ofertas estudiantiles"
             )
+
+
+            TipCard(
+                title = "Usa biblioteca",
+                description = "Aprovecha recursos gratuitos en tu institución"
+            )
+            TipCard(
+                title = "Controla tus suscripciones",
+                description = "Cancela servicios que no uses regularmente"
+            )
+
+            TipCard(
+                title = "Busca becas",
+                description = "Revisa convocatorias de becas o apoyos estudiantiles"
+            )
+            TipCard(
+                title = "Estudia en casa",
+                description = "Ahorra evitando cafés o lugares costosos para estudiar"
+            )
+            TipCard(
+                title = "Evita deudas",
+                description = "Paga a tiempo y evita intereses innecesarios"
+            )
+
         }
 
         item {
